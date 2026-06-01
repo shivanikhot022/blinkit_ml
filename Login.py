@@ -65,7 +65,6 @@ if st.button("Login"):
     if email and password == "scalar@123":
         st.session_state.logged_in = True
         st.success("Login Successful ✅")
-        st.rerun()
     else:
         st.error("Invalid Email or Password ❌")
     if st.session_state.get("logged_in", False):
