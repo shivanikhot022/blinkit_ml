@@ -122,9 +122,10 @@ button[data-baseweb="tab"][aria-selected="true"] > div > p {color:#AA336A  !impo
 st.title("🤖 Machine Learning Analytics Dashboard")
 #---------------------------------------------------------------------------------------------------------------------
 # Load segmented customer data
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 rfm= pd.read_csv("customer_segments.csv")
 path="D:/datascience/Analytix_Internship_data_analyst/blinkit/streamlit/"
-customers = pd.read_csv(path+"unclean_data/blinkit_customers.csv")
+customers = pd.read_csv(os.path.join(BASE_DIR, "unclean_data", "blinkit_customers.csv"))
 customer_info = customers[["customer_id","customer_name","area"]]
 df = rfm.merge(customer_info,on="customer_id",how="left")
 df = df[["customer_id","customer_name","area","Recency","Frequency","Monetary","Cluster","Segment"]]
