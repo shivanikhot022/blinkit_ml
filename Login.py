@@ -65,7 +65,13 @@ if st.button("Login"):
     if email and password == "scalar@123":
         st.session_state.logged_in = True
         st.success("Login Successful ✅")
-        st.switch_page("pages/1_Business Manager.py")
+        st.rerun()
     else:
         st.error("Invalid Email or Password ❌")
+    if st.session_state.get("logged_in", False):
+        st.page_link(
+            "pages/1_Business Manager.py",
+            label="➡ Go to Dashboard",
+            icon="📊"
+        )
         
