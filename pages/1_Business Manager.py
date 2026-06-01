@@ -130,7 +130,7 @@ ord_items_prod_cust=orders.merge(order_items,on='order_id',how='left',suffixes=(
 ord_items_prod_cust['revenue'] = (ord_items_prod_cust['quantity'] *ord_items_prod_cust['unit_price'])
 ord_items_prod_cust['profit_amount'] = (ord_items_prod_cust['revenue'] *ord_items_prod_cust['margin_percentage'] / 100)
 ord_items_prod_cust['cost'] = (ord_items_prod_cust['revenue'] -ord_items_prod_cust['profit_amount'])
-ord_items_prod_cust['order_date']=pd.to_datetime(ord_items_prod_cust['order_date'])
+ord_items_prod_cust['order_date']=pd.to_datetime(ord_items_prod_cust['order_date'], errors='coerce')
 ord_items_prod_cust['month_number']=ord_items_prod_cust['order_date'].dt.month
 ord_items_prod_cust['year']=ord_items_prod_cust['order_date'].dt.year
 ord_items_prod_cust['year'] = (ord_items_prod_cust['year'].fillna(0).astype(int))
@@ -142,6 +142,7 @@ ord_items_prod_cust['day_type']=ord_items_prod_cust['day_name'].apply(lambda x: 
 ord_items_prod_cust["month"] = ord_items_prod_cust["order_date"].dt.strftime("%b")
 
 #st.write(ord_items_prod_cust.head())
+
 
 # TITLE
 st.markdown('<style>.block-container{padding-top:0.0rem;padding-bottom:0.0rem}</style>', unsafe_allow_html=True)

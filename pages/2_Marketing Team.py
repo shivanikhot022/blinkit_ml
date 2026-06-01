@@ -136,7 +136,7 @@ ord_items_prod_cust=customers.merge(orders,on='customer_id',how='left')\
         .merge(customer_feedback,on='customer_id',how='left',suffixes=("","_feed"))
 #orders related columns     
 ord_items_prod_cust['revenue'] = (ord_items_prod_cust['quantity'] *ord_items_prod_cust['unit_price'])
-ord_items_prod_cust['registration_date']=pd.to_datetime(ord_items_prod_cust['registration_date'])
+ord_items_prod_cust['registration_date']=pd.to_datetime(ord_items_prod_cust['registration_date'],dayfirst=True,errors='coerce')
 #ord_items_prod_cust['order_date']=pd.to_datetime(ord_items_prod_cust['order_date'])
 ord_items_prod_cust['month_number']=ord_items_prod_cust['registration_date'].dt.month
 ord_items_prod_cust['year']=ord_items_prod_cust['registration_date'].dt.year
