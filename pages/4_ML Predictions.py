@@ -307,10 +307,11 @@ with tab2:
             input_scaled = scaler.transform(input_data)
             cluster = model.predict(input_scaled)[0]
             segment_map = {
-                0: "Premium Customers",
-                1: "At Risk Customers",
-                2: "Regular Customers",
-                3: "Loyal Customers"}
+                2: "Premium Customers",
+                0: "Loyal Customers",
+                1: "Regular Customers",
+                3: "At Risk Customers"
+            }
             segment = segment_map[cluster]
             st.success(f"Predicted Segment: {segment}")
 

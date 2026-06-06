@@ -127,9 +127,10 @@ ord_items_prod_cust=orders.merge(order_items,on='order_id',how='left',suffixes=(
     .merge(products,left_on='product_id',right_on='product_id',how='left',suffixes=("","_prod"))\
         .merge(customers,on='customer_id',how='right',suffixes=("","_cust"))
         
-ord_items_prod_cust['revenue'] = (ord_items_prod_cust['quantity'] *ord_items_prod_cust['unit_price'])
-ord_items_prod_cust['profit_amount'] = (ord_items_prod_cust['revenue'] *ord_items_prod_cust['margin_percentage'] / 100)
-ord_items_prod_cust['cost'] = (ord_items_prod_cust['revenue'] -ord_items_prod_cust['profit_amount'])
+
+ord_items_prod_cust['revenue'] = (ord_items_prod_cust['order_total'])
+ord_items_prod_cust['profit_amount'] = (ord_items_prod_cust['revenue']* ord_items_prod_cust['margin_percentage']/ 100)
+ord_items_prod_cust['cost'] = (ord_items_prod_cust['revenue']- ord_items_prod_cust['profit_amount'])
 ord_items_prod_cust['order_date']=pd.to_datetime(ord_items_prod_cust['order_date'], errors='coerce')
 ord_items_prod_cust['month_number']=ord_items_prod_cust['order_date'].dt.month
 ord_items_prod_cust['year']=ord_items_prod_cust['order_date'].dt.year
@@ -249,11 +250,11 @@ with tab1:
     st.pyplot(fig)
     with st.expander("📈 Revenue and Profit by Month - Insights"):
         st.markdown("""
-                Revenue and profit show strong growth from March to August.  
-            August recorded the highest revenue and profit performance.  
-            Revenue declines sharply during November and December, indicating possible seasonal slowdown.  
-            Profit trend follows revenue trend, showing stable profitability margins throughout the year.  
-            Business performance is strongest during mid-year months.  
+                Revenue and profit increased steadily from July to October.
+                October recorded the highest revenue and profit performance.
+                A sharp decline is observed in November after the peak month.
+                Profit closely follows the revenue trend, indicating stable profitability.
+                Overall business performance was strongest during September and October. 
         """)
     
     st.markdown("<hr style='border:2px solid black'>", unsafe_allow_html=True) 
@@ -289,11 +290,11 @@ with tab1:
         st.pyplot(fig,use_container_width=True)
         with st.expander("📊 Revenue, Profit and Orders by Day Type - Insights"):
                 st.markdown(f"""
-                Weekdays generated approximately **₹3.5M revenue** and **₹1M profit**.  
-                Weekend revenue contribution is much lower at approximately **₹1.4M**.  
-                Total weekday orders are around **3.6K**, much higher than weekends (~1.4K).  
-                Customer purchasing activity is strongest during weekdays.  
-                Weekend sales can be improved through promotional campaigns and discounts.  
+                Weekdays generate significantly higher revenue, profit, and order volume compared to weekends.
+                The majority of customer orders are placed on weekdays, driving overall business performance.
+                Profit follows the same pattern as revenue, indicating consistent profitability across both day types.
+                Weekend sales contribute a smaller share of total revenue and orders.
+                Customer engagement and purchasing activity are strongest during weekdays.
                 """)
     # Orders by Area
     with c3:
@@ -328,11 +329,10 @@ with tab1:
         st.pyplot(fig)
         with st.expander("🏷️ Top 10 Category by Revenue - Insights"):
             st.markdown(f"""
-            **Dairy & Breakfast** generated the highest category revenue (**~₹6.3 Lakhs**).  
-            **Pharmacy** and **Fruits & Vegetables** are also major revenue contributors.  
-            Grocery and healthcare categories dominate overall business sales.  
-            Lower-performing categories contribute below **₹4 Lakhs** revenue.  
-            Category analysis helps identify high-demand business segments.  
+                Dairy & Breakfast generates the highest revenue among all categories.
+                Household Care and Pet Care are also strong revenue contributors.
+                Instant & Frozen Food records the lowest revenue among the top categories.
+                Revenue is fairly distributed across categories with no extreme dependency on a single category.
             """)
 
     # Orders by Product
@@ -371,12 +371,10 @@ with tab1:
         st.pyplot(fig)
         with st.expander("🏆 Top 10 Products by Revenue - Insights"):
             st.markdown(f"""
-            **Vitamins** generated the highest product revenue of approximately **₹2.6 Lakhs**.  
-            **Pet Treats** contributed around **₹2.5 Lakhs** revenue.  
-            **Cough Syrup** and **Toilet Cleaner** also generated revenue above **₹2 Lakhs**.  
-            Healthcare and wellness products contribute significantly to business profitability.  
-            Top revenue-generating products should receive higher inventory focus.  
-            Product revenue analysis helps identify profitable business segments.  
+            Pet Treats generates the highest revenue among all products.
+            Toilet Cleaner and Lotion contribute significantly to total sales revenue.
+            Cat Food, Pulses, and Bread generate comparatively lower revenue.
+            High-order products are also among the top revenue-generating products.
             """)
 
     with c7:
@@ -388,12 +386,10 @@ with tab1:
         st.pyplot(fig)
         with st.expander("💳 Revenue by Payment Method - Insights"):
             st.markdown(f"""
-            **Card payments** contributed the highest revenue share at approximately **26.7%**.  
-            **Cash payments** contributed around **24.8%** revenue share.  
-            **UPI payments** generated approximately **24.6%** contribution.  
-            **Wallet payments** contributed the lowest share at around **24.0%**.  
-            Revenue contribution across payment methods is relatively balanced.  
-            Payment method analysis helps understand customer transaction preferences.  
+            Card payments contribute the highest share of revenue.
+            Cash, Wallet, and UPI contribute almost equally to sales.
+            Revenue distribution is balanced across payment methods.
+            No single payment method dominates customer transactions. 
             """)
             
     st.markdown("<hr style='border:2px solid black'>", unsafe_allow_html=True) 
@@ -411,12 +407,10 @@ with tab1:
         
         with st.expander("📉 Less Performing Products by Revenue - Insights"):
             st.markdown(f"""
-            **Lemonade** generated the lowest revenue at approximately **₹15K**.  
-            **Rice**, **Cereal**, and **Spinach** also contributed relatively lower revenue below **₹25K**.  
-            Low-performing products indicate weaker customer demand or lower sales volume.  
-            Products with low revenue may require discounts, promotions, or bundling strategies.  
-            Inventory levels for low-performing products should be optimized to reduce holding costs.  
-            Product performance analysis helps identify weak business segments requiring improvement.  
+                Spinach generates the lowest revenue among listed products.
+                Lemonade and Milk also show relatively weak sales performance.
+                Rice, Cookies, and Cereal perform better within the low-performing group.
+                These products may require promotional offers to improve sales. 
             """)
 
 
@@ -432,9 +426,10 @@ with tab1:
         st.pyplot(fig)
         with st.expander("🏷️ Top 10 Brand by Revenue - Insights"):
             st.markdown(f"""
-            **Karnik PLC** generated the highest brand revenue at approximately **₹65K**.  
-            **Mandal-Kar** and **Roy-Char** also contributed strong revenue above **₹50K**.  
-            Top-performing brands contribute a major share of total business revenue.  
+            Mandal-Kar is the highest revenue-generating brand.
+            Karnik PLC and Kurian-Chhabra are strong performers.
+            Revenue differences among top brands are relatively small.
+            Brand performance is distributed across multiple leading brands.
             Revenue difference between top and bottom brands is relatively moderate, showing balanced brand contribution.  
             High-performing brands should receive stronger inventory and marketing focus.  
             Brand-wise revenue analysis helps identify the most profitable business partnerships.  
@@ -458,7 +453,7 @@ with tab2:
     with col1:
         with st.expander("💰 Total Revenue"):
             st.write("**Meaning:** Total revenue generated from all sales.")
-            st.write("**Formula:** SUM(revenue)")
+            st.write("**Formula:** SUM(order_total)")
     with col2:
         with st.expander("📈 Total Profit"):
             st.write("**Meaning:** Profit earned after deducting costs.")
